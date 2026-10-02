@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Browser Suite">
+
+    <!-- Existing ParameterTest -->
+
+    <test name="Chrome Test">
+        <parameter name="browserName" value="Chrome"/>
+
+        <classes>
+            <class name="tests.ParameterTest"/>
+        </classes>
+    </test>
+
+    <test name="Edge Test">
+        <parameter name="browserName" value="Edge"/>
+
+        <classes>
+            <class name="tests.ParameterTest"/>
+        </classes>
+    </test>
+
+    <test name="Firefox Test">
+        <parameter name="browserName" value="Firefox"/>
+
+        <classes>
+            <class name="tests.ParameterTest"/>
+        </classes>
+    </test>
+
+
+    <!-- New GoogleTest -->
+
+    <test name="Google Chrome Test">
+        <parameter name="browserName" value="Chrome"/>
+
+        <classes>
+            <class name="tests.GoogleTest"/>
+        </classes>
+    </test>
+
+    <test name="Google Edge Test">
+        <parameter name="browserName" value="Edge"/>
+
+        <classes>
+            <class name="tests.GoogleTest"/>
+        </classes>
+    </test>
+
+    <test name="Google Firefox Test">
+        <parameter name="browserName" value="Firefox"/>
+
+        <classes>
+            <class name="tests.GoogleTest"/>
+        </classes>
+    </test>
+
+</suite>
