@@ -1,107 +1,141 @@
-# SeleniumMavenProject
+# Selenium Maven Automation Project
 
-![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
-![Selenium](https://img.shields.io/badge/Selenium-4.47.0-43B02A?logo=selenium&logoColor=white)
-![TestNG](https://img.shields.io/badge/TestNG-7.12.0-E76F00)
-![Apache POI](https://img.shields.io/badge/Apache%20POI-5.5.1-C60C30)
-![Maven](https://img.shields.io/badge/Maven-3.9-C71A36?logo=apachemaven&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-15%20passed-brightgreen)
+A Java-based Selenium automation framework for browser testing with TestNG, Maven, and Excel-driven data. This project demonstrates end-to-end UI testing across real public websites and follows a structured test automation architecture suitable for real-world QA work.
 
-UI test automation with **Java + Selenium 4 + TestNG + Maven**, including
-**Excel-driven data** (Apache POI), TestNG groups, cross-browser parameters and
-explicit waits — exercised against [SauceDemo](https://www.saucedemo.com),
-[selenium.dev](https://www.selenium.dev/selenium/web/web-form.html) and Google.
+## Why this project matters
 
-## Table of contents
-- [What it tests](#what-it-tests)
-- [Tech stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Setup and run](#setup-and-run)
-- [Running from Eclipse/IntelliJ](#running-from-eclipseintellij)
-- [Project structure](#project-structure)
+This repository showcases a solid automation foundation in Java and Selenium:
 
-## What it tests
-
-| Test class | What it covers |
-|------------|----------------|
-| `FirstSeleniumTest` | Intro/smoke test |
-| `LoginTest` | SauceDemo login → asserts title `Swag Labs` + `inventory.html` URL |
-| `AddToCartTest` | Adds Sauce Labs Backpack, opens the cart, asserts the item name |
-| `CheckoutTest` | Full checkout flow with `ChromeOptions` (password prompts disabled) + explicit `WebDriverWait` |
-| `SauceDemoExcelTest` | **Data-driven login** — positive & negative rows via Excel `@DataProvider`, explicit waits |
-| `ParameterTest` | Cross-browser (`Chrome`/`Edge`/`Firefox` via `@Parameters`) form test on selenium.dev: type → submit → assert `Received!`, ordered with `priority` |
-| `GoogleTest` | Cross-browser Google search smoke test |
-| `GroupTest` | TestNG **groups** demo (`login`, `products`, `checkout`) |
-| `ExcelDataProvider`, `Reader`, `ReadExcel`, `ReadSpecificvalue` | Apache POI helpers that read test data from Excel |
-| `testngPractice.DataForTesting` | The `@DataProvider` consumed by `SauceDemoExcelTest` |
-
-`mvn test` runs the whole suite: **15 tests**.
+- browser automation with Selenium WebDriver
+- test execution with TestNG
+- data-driven testing using Apache POI
+- cross-browser execution patterns
+- page-level test organization
+- reusable setup and utility logic
 
 ## Tech stack
 
-| Tool          | Version | Purpose                        |
-|---------------|---------|--------------------------------|
-| Java          | 21      | Language                       |
-| Selenium      | 4.47.0  | Browser automation (Selenium Manager auto-resolves ChromeDriver) |
-| TestNG        | 7.12.0  | Test framework (groups, parameters, data providers) |
-| Apache POI    | 5.5.1   | Excel test-data reading        |
-| Maven         | 3.9+    | Build + Surefire runner        |
+- Java 21
+- Selenium 4.47.0
+- TestNG 7.12.0
+- Apache POI 5.5.1
+- Maven 3.9+
+- Chrome, Edge, Firefox support
+
+## Architecture overview
+
+This project follows a practical automation design that separates concerns between tests, page actions, and data providers.
+
+```text
+SeleniumMavenProject/
+├── src/test/java/
+│   ├── tests/
+│   │   ├── FirstSeleniumTest.java
+│   │   ├── LoginTest.java
+│   │   ├── AddToCartTest.java
+│   │   ├── CheckoutTest.java
+│   │   ├── GoogleTest.java
+│   │   ├── GroupTest.java
+│   │   ├── ParameterTest.java
+│   │   ├── SauceDemoExcelTest.java
+│   │   ├── ExcelDataProvider.java
+│   │   ├── ReadExcel.java
+│   │   ├── ReadSpecificvalue.java
+│   │   └── Reader.java
+│   └── testngPractice/
+│       └── DataForTesting.java
+├── testng.xml
+├── Group.xml
+├── google.xml
+├── pom.xml
+├── README.md
+├── test-output/
+├── target/
+└── resources / datasets
+```
+
+## What this project covers
+
+| Test class | Scope |
+|------------|-------|
+| FirstSeleniumTest | basic smoke / intro test |
+| LoginTest | SauceDemo login flow |
+| AddToCartTest | product add-to-cart behavior |
+| CheckoutTest | end-to-end checkout flow |
+| SauceDemoExcelTest | Excel-driven login validation |
+| ParameterTest | cross-browser execution checks |
+| GoogleTest | search flow smoke test |
+| GroupTest | TestNG groups demo |
+
+## Key testing concepts demonstrated
+
+### 1. Page-object style separation
+Tests focus on behavior and validation instead of embedding every UI step in one large method.
+
+### 2. TestNG features
+This project uses:
+- annotations
+- groups
+- parameterization
+- data providers
+- suite configuration
+
+### 3. Data-driven testing
+The project reads test input from Excel files and passes those values into test cases using Apache POI helpers.
+
+### 4. Browser flexibility
+The project includes browser parameterization and supports multiple browsers for targeted validation.
 
 ## Prerequisites
 
-- **JDK 21** — `java -version`
-- **Maven 3.9+** — `mvn -v`
-- **Google Chrome** (the SauceDemo tests use `ChromeDriver`; Edge/Firefox optional)
-- Internet access (tests hit live websites)
+- JDK 21+
+- Maven 3.9+
+- Chrome installed
+- Optional: Edge or Firefox for cross-browser scenarios
 
-## Setup and run
+## How to run
 
 ```bash
 git clone https://github.com/anithaswam95-beep/SeleniumMavenProject.git
 cd SeleniumMavenProject
-
-# Full suite
 mvn clean test
 ```
 
-Real output from the full suite:
-
-```
-[INFO] Building SeleniumMavenProject 0.0.1-SNAPSHOT
-[INFO] Running TestSuite
-[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 71.38 s -- in TestSuite
-[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
-[INFO] BUILD SUCCESS
-```
-
-Other useful commands:
+### Run a single class
 
 ```bash
-mvn test -Dtest=LoginTest          # a single test class
-mvn test -Dgroups=login            # run a TestNG group
+mvn test -Dtest=LoginTest
 ```
 
-No driver management needed — **Selenium Manager** (bundled with Selenium 4)
-downloads the matching ChromeDriver automatically.
+### Run a group
 
-## Running from Eclipse/IntelliJ
-
-1. Import the folder as an **Existing Maven Project**
-2. Open [`testng.xml`](testng.xml) (or [`Group.xml`](Group.xml) for group runs)
-3. **Run As → TestNG Suite** — this also lets you set the `browserName`
-   parameter (`Chrome` by default) for the cross-browser tests
-4. Reports are generated in `test-output/`
-
-## Project structure
-
+```bash
+mvn test -Dgroups=login
 ```
-SeleniumMavenProject/
-├── pom.xml                     # deps: Selenium, TestNG, Apache POI
-├── testng.xml                  # TestNG suite (IDE runs)
-├── Group.xml / google.xml      # group & browser-specific suites
-├── src/test/java/
-│   ├── tests/                  # all test classes (see table above)
-│   └── testngPractice/         # DataForTesting (@DataProvider)
-├── target/                     # build output + surefire reports
-└── test-output/                # TestNG HTML reports
-```
+
+## Example result
+
+The project has been designed to execute a full suite of UI validations, with results generated in the `test-output/` directory and Surefire reports under `target/`.
+
+## Why it is a strong portfolio project
+
+This repository is one of the strongest examples of your QA automation skill set because it demonstrates:
+
+- real browser automation
+- reusable test structure
+- cross-browser and parameterized testing
+- data-driven design
+- practical enterprise-style coverage
+
+## Suggested next improvements
+
+- add a page object model layer for more complex flows
+- implement screenshot capture on failure
+- add CI execution through GitHub Actions
+- add a reporting dashboard summary
+- expand scenarios for more real-world user journeys
+
+## Summary
+
+This project represents a practical Selenium automation foundation and is a strong portfolio project for demonstrating Java-based browser automation, TestNG usage, and test data management.
+
